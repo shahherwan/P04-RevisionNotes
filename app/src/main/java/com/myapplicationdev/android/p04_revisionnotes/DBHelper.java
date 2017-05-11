@@ -13,7 +13,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	//TODO Define the Database properties
 	private static final String DATABASE_NAME = "";
-	private static final int DATABASE_VERSION = ;
+	private static final int DATABASE_VERSION = 1;
+	private static final String TABLE_NOTE = "note";
+	private static final String COLUMN_ID = "_id";
+	private static final String COLUMN_NOTECONTENT = "noteContent";
+	private static final String COLUMN_STARS = "stars";
 
 
 	public DBHelper(Context context) {
@@ -22,7 +26,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		//TODO CREATE TABLE Note
+		String createTableSql = "CREATE TABLE " + TABLE_NOTE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NOTECONTENT + " TEXT," + COLUMN_STARS + " INTEGER )";
+		db.execSQL(createTableSql);
 
 	}
 
@@ -34,10 +39,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public void insertNote(String noteContent, int stars) {
 		//TODO insert the data into the database
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_NOTECONTENT, noteContent);
+		values.put(COLUMN_STARS, stars);
+		db.insert(TABLE_NOTE, null, values);
+		db.close();
 	}
 
 	public ArrayList<Note> getAllNotes() {
 		//TODO return records in Java objects
+
+
 	}
 
     public ArrayList<String> getNoteContent() {
